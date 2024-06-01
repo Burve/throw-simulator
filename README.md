@@ -12,6 +12,32 @@ During the simulation, possible bending of the cylinder where the ball is attach
 
 The end result of the simulation is provided in the form of a trajectory graph for easy comparison between different input parameters.
 
+# Solution Explanation
+
+In order to calculate the trajectory and distance traveled of the ball attached to the rod and thrown via an engine, I divided the calculations into three parts.
+
+## 1 - Calculating Actual Angular Speed at the Moment of Launch
+
+Because the motor is moving from the idle position to a set angle that is smaller than a single revolution, there are no guarantees that the speed of the motor will be its maximum possible speed at the moment of ball separation. To calculate the actual speed of the motor at the angle of separation, $\omega$ was calculated using formulas from 5 to 9. It is important to note that $\omega$ is capped at the engine's maximum speed, as it is possible to have parameters that will exceed it.
+
+## 2 - Calculating Actual Ball Launch Angle
+
+While the motor will stop and signal for the ball separation at the required angle, in reality, it will not be exactly that angle. There are two factors that need to be taken into account:
+
+a) During the arm's movement, some centrifugal forces will affect the rod holding the ball, making it bend backward slightly. The amount of deformation is determined by the rod material and ball weight.
+
+b) While the rod will be stopped at the angle of the engine, the actual ball is attached to the rod in the direction of the movement. As a result, the distance to the ball from the engine is slightly different and is calculated using formula 4.
+
+In the end, the actual ball launch angle is calculated using formulas from 10 to 12.
+
+## 3 - Calculation of the Ball Trajectory
+
+After the ball launch angle is known and its position in the world is calculated for the ball, the trajectory is calculated until the ball reaches the ground, assumed at y=0. That is calculated using formulas from 13 to 17.
+
+Lastly, the maximum travel distance is calculated for the ball using formula 18 as a simple distance check along the x-axis between the starting position where the ball was separated from the rod and when it hit the ground (y=0).
+
+### Detailed formulas for each step were acquired in comprehensive chats with the aforementioned AI, including follow-up conversations, as the AI was unable to include all details mentioned here and it was prompted to check if some specific cases could be a factor or not
+
 # Used Formulas
 
 1. Ball radius:

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Throw Simulation</title>
+    <style>
+        .custom-container {
+            max-width: 80%; /* Adjust this value to make the form wider or narrower */
+        }
+    </style>
+</head>
+<body>
+<div class="container custom-container mt-5">
+    <div class="d-flex align-items-center justify-content-between">
+        <h2 class="mb-0">Simulation Form</h2>
+        <div>
+            <button type="button" class="btn btn-primary mr-2"
+                    onclick="document.getElementById('simulationForm').submit();">Simulate
+            </button>
+            {% if graph_generated %}
+                <form action="{% url 'download_plot' %}" method="get" class="d-inline">
+                    <button type="submit" class="btn btn-secondary">Download Plot as PDF</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <form id="simulationForm" action="/" method="post">
+                {% load bootstrap_filters %}
+                {% csrf_token %}
+                <div class="row">
+                    {% for field in form %}
+                        <div class="col-md-12">
+                            <div class="form-group row align-items-center">
+                                <label for="{{ field.id_for_label }}"
+                                       class="col-sm-8 col-form-label">{{ field.label }}</label>
+                                <div class="col-sm-3">
+                                    {{ field|add_bootstrap }}
+                                </div>
+                                {% if field.help_text %}
+                                    <small class="form-text text-muted d-inline">{{ field.help_text }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </form>
+        </div>
+        {% if plot %}
+            <div class="col-md-6">
+                <h2>Simulation results:</h2>
+                <h1>Travel distance: {{ travel_distance|floatformat:"3" }} m</h1>
+                <img src="data:image/png;base64,{{ plot }}" alt="Plot" class="img-fluid"/>
+            </div>
+        {% endif %}
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

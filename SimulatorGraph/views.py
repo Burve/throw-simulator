@@ -184,8 +184,8 @@ def simulation(request):
                     # ['Ball Material Young\'s Modulus', f'{ball_youngs_modulus}', 'Gpa'],
                     ['Ball Material Density', f'{ball_material_density}', 'Kg/m^3'],
                     ['Environment Gravity', f'{environment_gravity}', 'meters/second^2'],
-                    ['Omega', f'{omega:.2f}', 'radians/second'],
-                    ['Travel Distance', f'{travel_distance:.2f}', 'meters']
+                    ['Omega', f'{omega:.3f}', 'radians/second'],
+                    ['Travel Distance', f'{travel_distance:.3f}', 'meters']
                 ]
 
                 # Create the table and add it to the lower subplot
